@@ -1,0 +1,43 @@
+swagger: "2.0"
+
+info:
+  title: "{{title}}"
+  version: "1.0"
+
+basePath: /api
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      description: Returns message if everything is OK
+      operationId: app.controllers.health.get_health
+      produces:
+        - text/plain;
+      responses:
+        200:
+          description: Health Check
+
+  /users:
+    get:
+      summary: Users
+      description: Returns users
+      operationId: app.controllers.users.get_users
+      produces:
+        - application/json
+      responses:
+        200:
+         description: OK
+         schema:
+           type: array
+           items:
+             $ref: '#/definitions/User'
+
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
