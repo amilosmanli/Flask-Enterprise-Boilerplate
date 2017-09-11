@@ -1,8 +1,9 @@
+import sys
 import os
 import os.path as op
+import logging
 
 from connexion import FlaskApp
-from flask_script import Manager
 
 from core.extensions import db, ma
 
@@ -16,23 +17,19 @@ settings = {
 
 
 class SettingsError(Exception):
-    def __init__(self, setting_name):
-        super(Exception, self)\
-            .__init__("Given application setting does not exist: %s"
-                      % setting_name)
-        self.setting_name = setting_name
+    pass
 
 
 class SwaggerError(Exception):
-    def __init__(self, message):
-        super(Exception, self).__init__(message)
+    pass
 
 
 def get_config(setting_name):
     if settings.get(setting_name):
         return settings.get(setting_name)
     else:
-        raise SettingsError(setting_name)
+        raise SettingsError("Given settings name does not exists: %s"
+                            % setting_name)
 
 
 def register_extensions(app):
@@ -57,15 +54,23 @@ def create_app(app_name, config_name):
 
     cnnx_app = FlaskApp(app_name)
     flask_app = cnnx_app.app
-    flask_app.app_context().push()
     flask_app.config.from_object(config_obj)
+    flask_app.app_context().push()
+
+    log_formatter = logging.Formatter(
+        "[%(asctime)s] - %(levelname)s - %(message)s"
+    )
+
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setFormatter(log_formatter)
+    if flask_app.config['DEBUG']:
+        handler.setLevel(logging.DEBUG)
+    else:
+        handler.setLevel(logging.INFO)
+
+    flask_app.logger.addHandler(handler)
 
     register_extensions(flask_app)
     register_api(cnnx_app)
 
     return flask_app
-
-
-def get_manager(app_name, config_name):
-    app = create_app(app_name, config_name)
-    return Manager(app)

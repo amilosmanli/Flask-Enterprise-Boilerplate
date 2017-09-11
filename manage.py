@@ -1,9 +1,13 @@
 import os
 
-from core.factories import get_manager
+from flask_script import Manager
+
+from core.factories import create_app
 
 config_name = os.getenv('APP_SETTINGS', 'default')
-manager = get_manager(__name__, config_name)
+app = create_app(__name__, config_name)
+
+manager = Manager(app)
 
 
 if __name__ == "__main__":
