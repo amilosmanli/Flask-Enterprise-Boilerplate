@@ -2,8 +2,10 @@ from core.extensions import db, ma
 
 
 class User(db.Model):
-    __table__ = db.Table('users', db.metadata,
-                         autoload=True, autoload_with=db.engine)
+    __tablename__ = 'users'
+
+    id = db.Column(db.String, primary_key=True)
+    name = db.Column(db.String, nullable=False)
 
     def __repr__(self):
         return '<User: %s>' % self.id

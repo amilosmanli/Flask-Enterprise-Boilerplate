@@ -1,7 +1,8 @@
-from app.models import User, UserSchema
+from database.models import User, UserSchema
 from flask import current_app
 
 logger = current_app.logger
+
 
 def get_users():
     users = User.query.all()

@@ -49,6 +49,23 @@ def register_api(app):
     return None
 
 
+def register_logger(app):
+    log_formatter = logging.Formatter(
+        "[%(asctime)s] - %(levelname)s - %(message)s"
+    )
+
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setFormatter(log_formatter)
+    if app.config['DEBUG']:
+        handler.setLevel(logging.DEBUG)
+    else:
+        handler.setLevel(logging.INFO)
+
+    app.logger.addHandler(handler)
+
+    return None
+
+
 def create_app(app_name, config_name):
     config_obj = get_config(config_name)
 
@@ -57,19 +74,7 @@ def create_app(app_name, config_name):
     flask_app.config.from_object(config_obj)
     flask_app.app_context().push()
 
-    log_formatter = logging.Formatter(
-        "[%(asctime)s] - %(levelname)s - %(message)s"
-    )
-
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setFormatter(log_formatter)
-    if flask_app.config['DEBUG']:
-        handler.setLevel(logging.DEBUG)
-    else:
-        handler.setLevel(logging.INFO)
-
-    flask_app.logger.addHandler(handler)
-
+    register_logger(flask_app)
     register_extensions(flask_app)
     register_api(cnnx_app)
 

@@ -6,4 +6,4 @@ class TestingConfig(Config):
 
     DEBUG = True
     DEVELOPMENT = True
-    SQLALCHEMY_DATABASE_URI = 'postgres:///template1'
+    SQLALCHEMY_DATABASE_URI = 'postgres:///test_boilerplate'

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from core.settings.base import Config
 
 

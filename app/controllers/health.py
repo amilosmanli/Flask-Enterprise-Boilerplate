@@ -1,3 +1,3 @@
 
 def get_health():
-    return 'I am OK'
+    return {'status': 'OK'}, 200
