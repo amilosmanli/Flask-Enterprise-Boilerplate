@@ -71,6 +71,7 @@ def create_app(app_name, config_name):
 
     cnnx_app = FlaskApp(app_name)
     flask_app = cnnx_app.app
+
     flask_app.config.from_object(config_obj)
     flask_app.app_context().push()
 

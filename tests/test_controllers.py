@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 from tests.factories import UserFactory
-from database.models import UserSchema
+from app.data.marshallers import UserSchema
 
 
 class TestHealthController:

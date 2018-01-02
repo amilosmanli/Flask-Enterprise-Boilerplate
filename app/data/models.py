@@ -1,4 +1,4 @@
-from core.extensions import db, ma
+from core.extensions import db
 
 
 class User(db.Model):
@@ -10,7 +10,3 @@ class User(db.Model):
     def __repr__(self):
         return '<User: %s>' % self.id
 
-
-class UserSchema(ma.ModelSchema):
-    class Meta:
-        model = User

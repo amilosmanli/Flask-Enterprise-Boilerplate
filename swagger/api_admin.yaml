@@ -4,7 +4,7 @@ info:
   title: "{{title}}"
   version: "1.0"
 
-basePath: /api
+basePath: /api-admin
 
 paths:
   /health:
